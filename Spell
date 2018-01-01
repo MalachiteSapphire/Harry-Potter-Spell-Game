@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Networking;
+using UnityEngine;
+
+public class CastSpell : MonoBehaviour {
+	public Camera playerCamera;
+	public GameObject Spell;
+
+
+	void Update()
+	{
+
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+
+			Fire();
+		}
+	}
+
+
+	void Fire() 
+	{
+		// Create the Spell from the spell Spell
+		var spell = (GameObject)Instantiate (Spell);
+
+		// Add cmaera's position to the bullet
+		spell.transform.position = playerCamera.transform.position + playerCamera.transform.forward;
+		spell.transform.forward = playerCamera.transform.forward;
+
+		// Add velocity to the spell
+		spell.GetComponent<Rigidbody> ().velocity = spell.transform.forward * 9;
+
+		// Destroy the spell after 2 seconds
+		Destroy (spell, 2.0f);
+
+	}
+}
